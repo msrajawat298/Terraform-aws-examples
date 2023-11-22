@@ -16,9 +16,7 @@ variable "key_name" {
   description = "The name of the key pair used for SSH access."
   default     = "my-ec2-key-terrform"  # Replace with your default key pair name
 }
-
-# variable "subnet_id" {
-#   description = "The VPC Subnet ID to launch in"
-#   type        = string
-#   default     = aws_default_vpc.default.default_subnet_id
-# }
+variable "ssh_username" {
+  description = "SSH username for connecting to the EC2 instance"
+  default = "ubuntu"
+}

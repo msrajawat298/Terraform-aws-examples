@@ -31,3 +31,4 @@ terraform.tfvars
 
 # Terraform lockfile
 .terraform.lock.hcl
+.terraform.tfstate.lock.info
