@@ -8,6 +8,44 @@ resource "aws_default_security_group" "default" {
   vpc_id = aws_default_subnet.default.vpc_id
 }
 
+# Create a security group allowing all incoming and outgoing traffic.
+resource "aws_security_group" "example_security_group" {
+  name        = "example_security_group"
+  description = "Security group for WordPress"
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow SSH from any IP address
+  }
+
+  ingress {
+    from_port = 80
+    to_port   = 80
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow HTTP from any IP address
+  }
+
+  ingress {
+    from_port = 443
+    to_port   = 443
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]  # Allow HTTPS from any IP address
+  }
+
+  egress {
+    from_port = 0
+    to_port   = 0
+    protocol  = "-1"  # Allow all outbound traffic
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "example_security_group"
+  }
+}
+
 # Generate a TLS private key for secure communication.
 resource "tls_private_key" "example_key" {
   algorithm = "RSA"
@@ -30,7 +68,7 @@ resource "aws_instance" "example_instance_myk" {
   ami                    = var.ami
   instance_type          = var.instance_type
   key_name               = var.key_name
-  vpc_security_group_ids = [aws_default_security_group.default.id]
+  vpc_security_group_ids = [aws_default_security_group.default.id, aws_security_group.example_security_group.id] #list of security groups
   subnet_id              = aws_default_subnet.default.id
   tags                   = {
     Name = "server-1"
