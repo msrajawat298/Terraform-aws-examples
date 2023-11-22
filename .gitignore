@@ -26,3 +26,8 @@ terraform.tfvars
 
 # Ignore macOS system files
 .DS_Store
+*.pem
+
+
+# Terraform lockfile
+.terraform.lock.hcl

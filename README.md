@@ -61,6 +61,13 @@ Contributions to this collection of Terraform aws examples are welcome! Feel fre
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## About Terraform
+
+## Terraform Useful commands
+```terraform version```
+```terraform version -json```
+
+
 Feel free to explore, use, and modify these examples for your Terraform projects. If you have any questions or improvements, please open an issue or submit a pull request.
 
 Happy Terraforming!
