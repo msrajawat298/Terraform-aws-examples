@@ -71,3 +71,33 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Feel free to explore, use, and modify these examples for your Terraform projects. If you have any questions or improvements, please open an issue or submit a pull request.
 
 Happy Terraforming!
+
+
+
+
+    # Use the remote-exec provisioner to execute the shell script after the instance is created
+    # readme: https://developer.hashicorp.com/terraform/language/resources/provisioners/remote-exec
+  provisioner "file" {
+    source      = "${path.module}/script/index.php"
+    destination = "/var/www/html/index.php"
+    connection {
+      type        = "ssh"
+      user        = var.ssh_username
+      private_key = file("${path.module}/${var.key_name}.pem")
+      host        = self.private_ip  # Use the public IP of the EC2 instance as the host
+      port = 22
+    }
+  }
+  # provisioner "remote-exec" {
+  #   inline = [
+  #     "chmod +x /tmp/script.sh",
+  #     "/tmp/script.sh",
+  #   ]
+  #   connection {
+  #     type        = "ssh"
+  #     user        = var.ssh_username
+  #     host        = self.private_ip  # Use the public IP of the EC2 instance as the host
+  #     private_key = file("${path.module}/${var.key_name}.pem")
+  #     agent = false
+  #   }
+  # }
